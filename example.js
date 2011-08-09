@@ -30,7 +30,7 @@ $(caterwaul.js_ui(caterwaul.js_all())(function () {
                                                           f3 = caterwaul.future(),
                                                           f  = caterwaul.future([f1, f2, f3])]),
 
-          object_example                = example('f = caterwaul.map({foo: foo, bar: bar})',
+          object_example                = example('f = caterwaul.future({foo: foo, bar: bar})',
 
                                                   jquery [table(tr(th('foo'),                th('bar'),                   th('f')),
                                                                 tr(td[future_ui(foo, 'hi')], td[future_ui(bar, 'there')], td[future_output(f)]))]
