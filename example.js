@@ -1,14 +1,14 @@
-$(caterwaul.js_ui(caterwaul.js_all())(function () {
+$(caterwaul.jquery(caterwaul.js_all())(function () {
   $('body').append(simple_example, mapped_example, array_example, object_example)
 
   -where [example(name, contents) = jquery in div.example(h1[name], div.contents[contents]),
 
           future_ui(f, value)           = jquery [div.future.decidable /text('<click to send #{JSON.stringify(value)}>')]
-                                          -effect- f.se(given.value in it.removeClass('decidable').addClass('decided').text(JSON.stringify(value)))
-                                          -effect- it.click(delay in f(value)),
+                                          -se- f.se(given.value in it.removeClass('decidable').addClass('decided').text(JSON.stringify(value)))
+                                          -se- it.click(delay in f(value)),
 
           future_output(f)              = jquery [div.future /text('<undecided>')]
-                                          -effect- f.se(given.value in it.addClass('decided').text(JSON.stringify(value))),
+                                          -se- f.se(given.value in it.addClass('decided').text(JSON.stringify(value))),
 
           simple_example                = example('caterwaul.future()', future_ui(caterwaul.future(), 'hello')),
 

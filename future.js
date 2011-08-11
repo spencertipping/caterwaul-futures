@@ -49,36 +49,36 @@ caterwaul.js_all()(function ($) {
                         callback_future(),
 
   where [callback_future()                     = calls_its_send_method() -se- caterwaul.merge(it, future_initials_for(it), future_operations_for(it))
-                                                 -where [calls_its_send_method() = bind [f(xs = arguments) = f.send.apply(f, xs)] in f],
+                                                 -where [calls_its_send_method() = where [f(xs = arguments) = f.send.apply(f, xs)] in f],
 
          transpose_array(xs)                   = result -se- xs *![x.push(receive(xi))] /seq
                                                         -where [result         = caterwaul.future(),
                                                                 received       = [],
                                                                 received_count = 0,
-                                                                receive(i)(x)  = (received[i] = x) -then- result(received) /when [++received_count === xs.length]],
+                                                                receive(i)(x)  = (received[i] = x) -re- result(received) /when [++received_count === xs.length]],
 
          transpose_object(o)                   = result -se- o /pairs *![x[1].push(receive(x[0]))] /seq
                                                         -where [result         = caterwaul.future(),
                                                                 original_count = o /keys -seq -re- it.length,
                                                                 received       = {},
                                                                 received_count = 0,
-                                                                receive(k)(v)  = (received[k] = v) -then- result(received) /when [++received_count === original_count]],
+                                                                receive(k)(v)  = (received[k] = v) -re- result(received) /when [++received_count === original_count]],
 
          // call_vc = call with variadic continuation. Used to call a function with some arguments, but where 'this' is bound to a function that takes multiple arguments and forwards them
          // through the future chain. This avoids Javascript's unary continuation asymmetry (i.e, expressions return only one value but continuations take potentially many).
-         call_vc(f, xs)                        = f.apply(continuation, xs) -returning [continuation_result || [it]]
-                                                                           -where     [continuation_result          = null,
-                                                                                       continuation(xs = arguments) = continuation_result = Array.prototype.slice.call(xs)],
+         call_vc(f, xs)                        = f.apply(continuation, xs) -re    [continuation_result || [it]]
+                                                                           -where [continuation_result          = null,
+                                                                                   continuation(xs = arguments) = continuation_result = Array.prototype.slice.call(xs)],
          future_initials_for(future)           = {listeners: [], values: null},
 
-         future_operations_for(future)         = {} -effect [it.se   = it.push(f)     = future            -se- future.listeners.push(f)
-                                                                                                          -se- f.apply(future, future.values) /when [future.values],
+         future_operations_for(future)         = {} -se [it.se   = it.push(f)     = future            -se- future.listeners.push(f)
+                                                                                                      -se- f.apply(future, future.values) /when [future.values],
 
-                                                             it.re   = it.map(f)      = callback_future() -se- future.push(given.nothing in it.apply(it, call_vc(f, arguments))),
-                                                             it.then = it.flat_map(f) = callback_future() -se- future.map(f).push(given.future in future.push(it)),
+                                                         it.re   = it.map(f)      = callback_future() -se- future.push(given.nothing in it.apply(it, call_vc(f, arguments))),
+                                                         it.then = it.flat_map(f) = callback_future() -se- future.map(f).push(given.future in future.push(it)),
 
-                                                             it.trigger(ls, xs)       = ls *![x.apply(future, xs)] -seq,
+                                                         it.trigger(ls, xs)       = ls *![x.apply(future, xs)] -seq,
 
-                                                             it.send(xs = arguments)  = future -se [it.decided = xs] -se- future.trigger(future.listeners, xs)]]})(caterwaul);
+                                                         it.send(xs = arguments)  = future -se [it.decided = xs] -se- future.trigger(future.listeners, xs)]]})(caterwaul);
 
 // Generated by SDoc 
