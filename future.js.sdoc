@@ -42,6 +42,11 @@ governed by the type of the argument to the future() constructor. Another possib
 
 Mathematically, this construct takes {k1: F(v1), k2: F(v2), ...} and returns F({k1: v1, k2: v2, ...}).
 
+Use as signals.
+Unlike most implementations of futures, these futures can be reused after they are decided. This means that a future can emit multiple values at different points in time, making it useful as a
+signal. Container-mapped futures do more or less the right thing with multiple invocations: It resets its state and starts waiting for the second round of entries. Any repeat entries it
+received in the meantime will be used for future invocations.
+
 caterwaul.js_all()(function ($) {
   caterwaul.future(x) = x ? x.constructor === Object ? transpose_object(x) :
                             x.constructor === Array  ? transpose_array(x)  :
@@ -49,20 +54,25 @@ caterwaul.js_all()(function ($) {
                         callback_future(),
 
   where [callback_future()             = calls_its_send_method() -se- caterwaul.merge(it, future_initials_for(it), future_operations_for(it))
-                                         -where [calls_its_send_method() = where [f(xs = arguments) = f.send.apply(f, xs)] in f],
+                                         -where [calls_its_send_method() = f -where [f(xs = arguments) = f.send.apply(f, xs)]],
 
-         transpose_array(xs)           = result -se- xs *![x.push(receive(xi))] /seq
+         componentwise(init, each)(xs) = result -se- each(xs, v.push(receive(k)) -given [k, v])
                                                 -where [result         = caterwaul.future(),
-                                                        received       = [],
-                                                        received_count = 0,
-                                                        receive(i)(x)  = (received[i] = x) -re- result(received) /when [++received_count === xs.length]],
+                                                        received       = init(),
+                                                        queue          = {},
 
-         transpose_object(o)           = result -se- o /pairs *![x[1].push(receive(x[0]))] /seq
-                                                -where [result         = caterwaul.future(),
-                                                        original_count = o /keys -seq -re- it.length,
-                                                        received       = {},
+                                                        enqueue(k, v)  = (queue[k] || (queue[k] = [])).push(v),
+                                                        replay_queue() = queue /pairs *![receive(x[0])(x[1].shift())] -seq,
+
+                                                        expected_count = each(xs, ++count -delay) -re- count -where [count = 0],
                                                         received_count = 0,
-                                                        receive(k)(v)  = (received[k] = v) -re- result(received) /when [++received_count === original_count]],
+                                                        receive(k)(v)  = received.hasOwnProperty(k) ?
+                                                                           enqueue(k, v) :
+                                                                           (received[k] = v) -re- result(received) /se   [received = init(), received_count = 0, replay_queue()]
+                                                                                                                   /when [++received_count === expected_count]],
+
+         transpose_array               = componentwise(delay in [], given [xs, f] in xs *![f(xi, x)] -seq),
+         transpose_object              = componentwise(delay in {}, given [o,  f] in o /pairs *![f(x[0], x[1])] -seq),
 
          // call_vc = call with variadic continuation. Used to call a function with some arguments, but where 'this' is bound to a function that takes multiple arguments and forwards them
          // through the future chain. This avoids Javascript's unary continuation asymmetry (i.e, expressions return only one value but continuations take potentially many).
