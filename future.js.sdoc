@@ -62,7 +62,7 @@ caterwaul.js_all()(function ($) {
                                                         queue          = {},
 
                                                         enqueue(k, v)  = (queue[k] || (queue[k] = [])).push(v),
-                                                        replay_queue() = queue /pairs *![receive(x[0])(x[1].shift())] -seq,
+                                                        replay_queue() = queue /pairs *![receive(x[0])(x[1].shift()) -when- x[1].length] -seq,
 
                                                         expected_count = each(xs, ++count -delay) -re- count -where [count = 0],
                                                         received_count = 0,
