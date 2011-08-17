@@ -79,10 +79,10 @@ caterwaul.js_all()(function ($) {
          call_vc(f, xs)                = f.apply(continuation, xs) -re    [continuation_result || [it]]
                                                                    -where [continuation_result          = null,
                                                                            continuation(xs = arguments) = continuation_result = Array.prototype.slice.call(xs)],
-         future_initials_for(future)   = {listeners: [], values: null},
+         future_initials_for(future)   = {listeners: [], decided: null},
 
          future_operations_for(future) = {} -se [it.se   = it.push(f)     = future            -se- future.listeners.push(f)
-                                                                                              -se- f.apply(future, future.values) /when [future.values],
+                                                                                              -se- f.apply(future, future.decided) /when [future.decided],
 
                                                  it.re   = it.map(f)      = callback_future() -se- future.push(given.nothing in it.apply(it, call_vc(f, arguments))),
                                                  it.then = it.flat_map(f) = callback_future() -se- future.map(f).push(given.future in future.push(it)),
