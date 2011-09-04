@@ -81,12 +81,14 @@ caterwaul.js_all()(function ($) {
                                                                            continuation(xs = arguments) = continuation_result = Array.prototype.slice.call(xs)],
          future_initials_for(future)   = {listeners: [], decided: null},
 
-         future_operations_for(future) = {} -se [it.se   = it.push(f)     = future            -se- future.listeners.push(f)
-                                                                                              -se- f.apply(future, future.decided) /when [future.decided],
+         future_operations_for(future) = capture [push(f)              = future            -se- future.listeners.push(f)
+                                                                                           -se- f.apply(future, future.decided) /when [future.decided],
 
-                                                 it.re   = it.map(f)      = callback_future() -se- future.push(given.nothing in it.apply(it, call_vc(f, arguments))),
-                                                 it.then = it.flat_map(f) = callback_future() -se- future.map(f).push(given.future in future.push(it)),
+                                                  map(f)               = callback_future() -se- future.push(given.nothing in it.apply(it, call_vc(f, arguments))),
+                                                  flat_map(f)          = callback_future() -se- future.map(f).push(given.future in future.push(it)),
 
-                                                 it.trigger(ls, xs)       = ls *![x.apply(future, xs)] -seq,
+                                                  trigger(ls, xs)      = ls *![x.apply(future, xs)] -seq,
 
-                                                 it.send(xs = arguments)  = future -se [it.decided = xs] -se- future.trigger(future.listeners, xs)]]})(caterwaul);
+                                                  send(xs = arguments) = future -se [it.decided = xs] -se- future.trigger(future.listeners, xs)]
+
+                                         -se [it.se = it.push, it.re = it.map]]})(caterwaul);
