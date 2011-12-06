@@ -250,6 +250,7 @@ meta::define_form 'template', sub {
   meta::externalize "template::$name", "template::$name", meta::eval_in("sub {\n$value\n}", "template::$name");
 };
 __
+meta::alias('e', 'future');
 meta::alias('ed', 'edit sdoc::js::dependencies');
 meta::alias('em', 'edit sdoc::js::modules');
 meta::alias('er', <<'__');
@@ -2585,8 +2586,7 @@ my $pattern = join '|', @_;
 __
 meta::function('reload', 'around_hook(\'reload\', sub {execute($_) for grep ! /^bootstrap::/, keys %data});');
 meta::function('render', <<'__');
-file::write("$_.js",     retrieve("js::$_")) for modules();
-file::write('test.html', retrieve('pp::html::test'));
+file::write("$_.js", retrieve("js::$_")) for modules();
 
 __
 meta::function('repl', <<'__');
@@ -3664,7 +3664,7 @@ caterwaul.js_all()(function ($) {
   where [callback_future()             = calls_its_send_method() -se- caterwaul.merge(it, future_initials_for(it), future_operations_for(it))
                                          -where [calls_its_send_method() = f -where [f(xs = arguments) = f.send.apply(f, xs)]],
 
-         componentwise(init, each)(xs) = result -se- each(xs, v.push(receive(k)) -given [k, v])
+         componentwise(init, each)(xs) = result -se- each(xs, v /~push/ receive(k) -given [k, v])
                                                 -where [result         = caterwaul.future(),
                                                         received       = init(),
                                                         queue          = {},
@@ -3689,17 +3689,18 @@ caterwaul.js_all()(function ($) {
                                                                            continuation(xs = arguments) = continuation_result = Array.prototype.slice.call(xs)],
          future_initials_for(future)   = {listeners: [], decided: null},
 
-         future_operations_for(future) = capture [push(f)              = future            -se- future.listeners.push(f)
-                                                                                           -se- f.apply(future, future.decided) /when [future.decided],
+         future_operations_for(future) = wcapture [push(f)              = future            -se- future.listeners.push(f)
+                                                                                            -se- f.apply(future, future.decided) /when [future.decided],
+                                                   se                   = push,
 
-                                                  map(f)               = callback_future() -se- future.push(given.nothing in it.apply(it, call_vc(f, arguments))),
-                                                  flat_map(f)          = callback_future() -se- future.map(f).push(given.future in future.push(it)),
+                                                   map(f)               = callback_future() -se- future.push(given.nothing in it.apply(it, call_vc(f, arguments))),
+                                                   re                   = map,
 
-                                                  trigger(ls, xs)      = ls *![x.apply(future, xs)] -seq,
+                                                   flat_map(f)          = callback_future() -se- future.map(f).push(given.future in future.push(it)),
 
-                                                  send(xs = arguments) = future -se [it.decided = xs] -se- future.trigger(future.listeners, xs)]
+                                                   trigger(ls, xs)      = ls *![x.apply(future, xs)] -seq,
 
-                                         -se [it.se = it.push, it.re = it.map]]})(caterwaul);
+                                                   send(xs = arguments) = future -se [it.decided = xs] -se- future.trigger(future.listeners, xs)]]})(caterwaul);
 
 __
 meta::sdoc('js::modules', <<'__');
