@@ -3717,7 +3717,9 @@ illustrate the difference on two arrays, each of which can be interpreted as the
                                                                                                               check_window() = xs.shift() -se- result(+xs -seq) -when [elements.length > size]],
 
                                                     fold(f, initial)     = result -se- observe /!push -where [result     = callback_future() -se [it.state() = initial],
-                                                                                                              observe(x) = result(initial = f(initial, x))]]]})(caterwaul);
+                                                                                                              observe(x) = result(initial = f(initial, x))],
+
+                                                    filter(f)            = caterwaul_future() -se- "it(_) -when- f(_)".qf /!push]]})(caterwaul);
 
 __
 meta::sdoc('js::modules', <<'__');
