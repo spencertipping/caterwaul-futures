@@ -4,11 +4,11 @@ $(caterwaul.jquery(caterwaul.js_all())(function () {
   -where [example(name, contents) = jquery in div.example(h1[name], div.contents[contents]),
 
           future_ui(f, value)           = jquery [div.future.decidable /text('<click to send #{JSON.stringify(value)}>')]
-                                          -se- f.se(given.value in it.removeClass('decidable').addClass('decided').text(JSON.stringify(value)))
+                                          -se- f.push(given.value in it.removeClass('decidable').addClass('decided').text(JSON.stringify(value)))
                                           -se- it.click(delay in f(value)),
 
           future_output(f)              = jquery [div.future /text('<undecided>')]
-                                          -se- f.se(given.value in it.addClass('decided').text(JSON.stringify(value))),
+                                          -se- f.push(given.value in it.addClass('decided').text(JSON.stringify(value))),
 
           simple_example                = example('caterwaul.future()', future_ui(caterwaul.future(), 'hello')),
 

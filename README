@@ -1,5 +1,5 @@
 A simple implementation of the Future monad for Caterwaul and, by extension,
 for Javascript at large.
 
-There's documentation in the source code, and example.html shows real-world
-usage.
+There's documentation in the source code, and test/example.html shows
+real-world usage.
