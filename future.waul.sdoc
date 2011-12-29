@@ -81,7 +81,7 @@ invoked within the current invocation frame.
                                                                     -where [continuation_result          = null,
                                                                             continuation(xs = arguments) = continuation_result = Array.prototype.slice.call(xs)],
           future_initials_for(future)   = {listeners: [], decided: null},
-          future_operations_for(future) = wcapture [send(xs = arguments) = future -se [it.decided = xs, future.listeners *![future /-x.apply/ xs] -seq],
+          future_operations_for(future) = wcapture [send(vs = arguments) = future -se [it.decided = vs, future.listeners *![future /-x.apply/ vs] -seq],
 
                                                     push(f)              = future            -se- future.listeners /~push/ f
                                                                                              -se- future /-f.apply/ future.decided /when [future.decided],

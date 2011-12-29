@@ -1,4 +1,4 @@
-$(caterwaul.jquery(caterwaul.js_all())(function () {
+$(caterwaul('js_all jquery')(function () {
   $('body').append(simple_example, mapped_example, array_example, object_example)
 
   -where [example(name, contents) = jquery in div.example(h1[name], div.contents[contents]),

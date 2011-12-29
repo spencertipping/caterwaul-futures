@@ -36,11 +36,11 @@ return(function( ) {var continuation_result=null,continuation=function() { /* un
 return continuation_result=Array.prototype.slice.call(xs) } ;
 return( (function(it) {return(continuation_result|| [it] ) } ) .call(this, (f.apply(continuation,xs) ) ) ) } ) .call(this) } ,future_initials_for=function( /* unary , node */future) {;
 return{listeners: [ ] ,decided:null} } ,future_operations_for=function( /* unary , node */future) {;
-return(function( ) {var send=function() { /* unary ; node */var xs=arguments;
-return(function(it) {return(it.decided=xs, (function(xs) {var x,x0,xi,xl,xr;
+return(function( ) {var send=function() { /* unary ; node */var vs=arguments;
+return(function(it) {return(it.decided=vs, (function(xs) {var x,x0,xi,xl,xr;
 for(var xi=0,xl=xs.length;
 xi<xl;
- ++xi)x=xs[xi] , (x.apply(future,xs) ) ;
+ ++xi)x=xs[xi] , (x.apply(future,vs) ) ;
 return xs} ) .call(this,future.listeners) ) ,it} ) .call(this, (future) ) } ,push=function( /* unary , node */f) {;
 return(function(it) {return( ( (future.decided) && (f.apply(future,future.decided) ) ) ) ,it} ) .call(this, ( (function(it) {return( (future.listeners) .push( /* unary , node */f) ) ,it} ) .call(this, (future) ) ) ) } ,map=function( /* unary , node */f) {;
 return(function(it) {return(push(function(_) {return it.apply(it,call_vc(f,arguments) ) } ) ) ,it} ) .call(this, (callback_future() ) ) } ,flat_map=function( /* unary , node */f) {;
