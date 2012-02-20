@@ -9,7 +9,7 @@ return f.send.apply(f,arguments) } ;
 return(f) } ) .call(this) } ;
 return( (function(it) {return($.merge(it,future_initials_for(it) ,future_operations_for(it) ) ) ,it} ) .call(this, (calls_its_send_method() ) ) ) } ) .call(this) } ,componentwise=function(init,each) {;
 return function(xs) {;
-return(function( ) {var result=callback_future() ,received=init() ,queue= { } ,enqueue=function(k,v) {;
+return(function( ) {var result=callback_future() ,received=init() ,queue= { } ,numeric=xs.constructor===Array,enqueue=function(k,v) {;
 return(queue[k] || (queue[k] = [ ] ) ) .push(v) } ,replay_queue=function() {;
 return(function(xs) {var x,x0,xi,xl,xr;
 for(var xi=0,xl=xs.length;
@@ -20,7 +20,7 @@ for(var k in o)Object.prototype.hasOwnProperty.call(o,k) &&ps.push( [k,o[k] ] ) 
 return ps} ) .call(this, (queue) ) ) } ,expected_count= (function( ) {var count=0;
 return( (function(it) {return(count) } ) .call(this, (each(xs, (function(t,f) {return(function( ) {return f.call(t) } ) } ) (this, (function( ) {return++count} ) ) ) ) ) ) } ) .call(this) ,received_count=0,receive=function(k) {;
 return function(v) {;
-return received.hasOwnProperty(k) ?enqueue(k,v) : (function(it) {return( ( ( ++received_count===expected_count) && ( (function(it) {return(received=init() ,received_count=0,replay_queue() ) ,it} ) .call(this, (result(received) ) ) ) ) ) } ) .call(this, ( (received[k] =v) ) ) } } ;
+return received.hasOwnProperty(k) ?enqueue(k,v) : ( ( (received[numeric? +k:k] =v) ) , ( ( ( ++received_count===expected_count) && ( (function(it) {return(received=init() ,received_count=0,replay_queue() ) ,it} ) .call(this, (result(received) ) ) ) ) ) ) } } ;
 return( (function(it) {return(each(xs, (function(k,v) {return(v) .push(receive(k) ) } ) ) ) ,it} ) .call(this, (result) ) ) } ) .call(this) } } ,transpose_array=componentwise(function(_) {return[ ] } , (function(xs,f) {return(function(xs) {var x,x0,xi,xl,xr;
 for(var xi=0,xl=xs.length;
 xi<xl;

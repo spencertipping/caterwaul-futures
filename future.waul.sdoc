@@ -38,16 +38,17 @@ Mathematically, this construct takes {k1: F(v1), k2: F(v2), ...} and returns F({
                                                  -where [result         = callback_future(),
                                                          received       = init(),
                                                          queue          = {},
+                                                         numeric        = xs.constructor === Array,
 
                                                          enqueue(k, v)  = (queue[k] || (queue[k] = [])).push(v),
                                                          replay_queue() = queue /pairs *![receive(x[0])(x[1].shift()) -when- x[1].length] -seq,
 
                                                          expected_count = each(xs, ++count -delay) -re- count -where [count = 0],
                                                          received_count = 0,
-                                                         receive(k)(v)  = received.hasOwnProperty(k) ?
-                                                                            enqueue(k, v) :
-                                                                            (received[k] = v) -re- result(received) /se   [received = init(), received_count = 0, replay_queue()]
-                                                                                                                    /when [++received_count === expected_count]],
+                                                         receive(k)(v)  = received.hasOwnProperty(k) ? enqueue(k, v)
+                                                                                                     : (received[numeric ? +k : k] = v)
+                                                                                                       -then- result(received) /se   [received = init(), received_count = 0, replay_queue()]
+                                                                                                                               /when [++received_count === expected_count]],
           transpose_array               = componentwise("[]".qf, given [xs, f] in xs *![f(xi, x)] -seq),
           transpose_object              = componentwise("{}".qf, given [o,  f] in o /pairs *![f(x[0], x[1])] -seq),
 
