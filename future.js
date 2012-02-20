@@ -44,7 +44,7 @@ xi<xl;
 return xs} ) .call(this,future.listeners) ) ,it} ) .call(this, (future) ) } ,push=function(f) {;
 return(function(it) {return( ( (future.decided) && (f.apply(future,future.decided) ) ) ) ,it} ) .call(this, ( (function(it) {return( (future.listeners) .push(f) ) ,it} ) .call(this, (future) ) ) ) } ,map=function(f) {;
 return(function(it) {return(push(function(_) {return it.apply(it,call_vc(f,arguments) ) } ) ) ,it} ) .call(this, (callback_future() ) ) } ,flat_map=function(f) {;
-return(function(it) {return(push(function(_) {return f(_) .map( (function(result) {return it.apply(it,arguments) } ) ) } ) ) ,it} ) .call(this, (callback_future() ) ) } ,scan=function(size) {;
+return(function(it) {return(push(function(_) {return f.apply(this,arguments) .map( (function(result) {return it.apply(it,arguments) } ) ) } ) ) ,it} ) .call(this, (callback_future() ) ) } ,scan=function(size) {;
 return(function( ) {var xs= [ ] ,result= (function(it) {return(it.queue=function() {;
 return xs} ) ,it} ) .call(this, (callback_future() ) ) ,observe=function(x) {;
 return(function(it) {return(check_window() ) ,it} ) .call(this, ( (xs) .push(x) ) ) } ,check_window=function() {;
