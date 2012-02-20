@@ -87,7 +87,7 @@ invoked within the current invocation frame.
                                                                                              -se- future /-f.apply/ future.decided /when [future.decided],
 
                                                     map(f)               = callback_future() -se- push("it /-it.apply/ call_vc(f, arguments)".qf),
-                                                    flat_map(f)          = callback_future() -se- map(f /~push/ "future /~push/ it".qf),
+                                                    flat_map(f)          = callback_future() -se- push("f.apply(this, arguments).map(given.result in it /-it.apply/ arguments)".qf),
 
 Use as signals.
 Unlike most implementations of futures, these futures can be reused after they are decided. This means that a future can emit multiple values at different points in time, making it useful as a
