@@ -35,7 +35,7 @@ governed by the type of the argument to the future() constructor. Another possib
 Mathematically, this construct takes {k1: F(v1), k2: F(v2), ...} and returns F({k1: v1, k2: v2, ...}).
 
           componentwise(init, each)(xs) = result -se- each(xs, v /~push/ receive(k) -given [k, v])
-                                                 -where [result         = caterwaul.future(),
+                                                 -where [result         = callback_future(),
                                                          received       = init(),
                                                          queue          = {},
 
@@ -111,4 +111,4 @@ illustrate the difference on two arrays, each of which can be interpreted as the
                                                     fold(f, initial)     = result -se- observe /!push -where [result     = callback_future() -se [it.state() = initial],
                                                                                                               observe(x) = result(initial = f(initial, x))],
 
-                                                    filter(f)            = caterwaul_future() -se- "it(_) -when- f(_)".qf /!push]]});
+                                                    filter(f)            = callback_future() -se- "it(_) -when- f(_)".qf /!push]]});
