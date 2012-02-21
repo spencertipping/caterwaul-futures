@@ -42,7 +42,8 @@ for(var xi=0,xl=xs.length;
 xi<xl;
  ++xi)x=xs[xi] , (x.apply(future,vs) ) ;
 return xs} ) .call(this,future.listeners) ) ,it} ) .call(this, (future) ) } ,push=function(f) {;
-return(function(it) {return( ( (future.decided) && (f.apply(future,future.decided) ) ) ) ,it} ) .call(this, ( (function(it) {return( (future.listeners) .push(f) ) ,it} ) .call(this, (future) ) ) ) } ,map=function(f) {;
+return(function(it) {return( ( (future.decided) && (f.apply(future,future.decided) ) ) ) ,it} ) .call(this, ( (function(it) {return( (future.listeners) .push(f) ) ,it} ) .call(this, (future) ) ) ) } ,v=function(i) {;
+return future.decided[i||0] } ,map=function(f) {;
 return(function(it) {return(push(function(_) {return it.apply(it,call_vc(f,arguments) ) } ) ) ,it} ) .call(this, (callback_future() ) ) } ,flat_map=function(f) {;
 return(function(it) {return(push(function(_) {return f.apply(this,arguments) .map( (function(result) {return it.apply(it,arguments) } ) ) } ) ) ,it} ) .call(this, (callback_future() ) ) } ,scan=function(size) {;
 return(function( ) {var xs= [ ] ,result= (function(it) {return(it.queue=function() {;
@@ -55,5 +56,5 @@ return initial} ) ,it} ) .call(this, (callback_future() ) ) ,observe=function(x)
 return result(initial=f(initial,x) ) } ;
 return( (function(it) {return(push(observe) ) ,it} ) .call(this, (result) ) ) } ) .call(this) } ,filter=function(f) {;
 return(function(it) {return(push(function(_) {return( (f(_) ) && (it(_) ) ) } ) ) ,it} ) .call(this, (callback_future() ) ) } ;
-return( {send:send,push:push,map:map,flat_map:flat_map,scan:scan,fold:fold,filter:filter} ) } ) .call(this) } ;
+return( {send:send,push:push,v:v,map:map,flat_map:flat_map,scan:scan,fold:fold,filter:filter} ) } ) .call(this) } ;
 return($.merge( ($.future=construct_future) ,static_future_methods) ) } ) .call(this) } ) ;

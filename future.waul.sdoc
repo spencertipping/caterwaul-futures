@@ -87,6 +87,8 @@ invoked within the current invocation frame.
                                                     push(f)              = future            -se- future.listeners /~push/ f
                                                                                              -se- future /-f.apply/ future.decided /when [future.decided],
 
+                                                    v(i)                 = future.decided[i || 0],
+
                                                     map(f)               = callback_future() -se- push("it /-it.apply/ call_vc(f, arguments)".qf),
                                                     flat_map(f)          = callback_future() -se- push("f.apply(this, arguments).map(given.result in it /-it.apply/ arguments)".qf),
 
