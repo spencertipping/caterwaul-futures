@@ -88,8 +88,8 @@ invoked within the current invocation frame.
 
                                                     finalize(vs = arguments) = send.apply(future, vs) -se [future.finalized = true, future.listeners = null],
 
-                                                    push(f)                  = future -se- future.listeners /~push/ f /unless [future.finalized]
-                                                                                      -se- future /-f.apply/ future.decided /when [future.decided],
+                                                    push(f)                  = future -se [future.listeners /~push/ f /unless [future.finalized],
+                                                                                           future /-f.apply/ future.decided /when [future.decided]],
 
                                                     v(i)                     = future.decided[i || 0],
 
