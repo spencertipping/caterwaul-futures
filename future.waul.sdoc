@@ -81,16 +81,20 @@ invoked within the current invocation frame.
           call_vc(f, xs)                = f.apply(continuation, xs) -re    [continuation_result || [it]]
                                                                     -where [continuation_result          = null,
                                                                             continuation(xs = arguments) = continuation_result = Array.prototype.slice.call(xs)],
-          future_initials_for(future)   = {listeners: [], decided: null},
-          future_operations_for(future) = wcapture [send(vs = arguments) = future -se [it.decided = vs, future.listeners *![future /-x.apply/ vs] -seq],
 
-                                                    push(f)              = future            -se- future.listeners /~push/ f
-                                                                                             -se- future /-f.apply/ future.decided /when [future.decided],
+          future_initials_for(future)   = {listeners: [], decided: null, finalized: false},
+          future_operations_for(future) = wcapture [send(vs = arguments)     = raise [new Error('cannot send #{vs} to a finalized future')] /when [future.finalized]
+                                                                               -then- future -se [it.decided = vs, future.listeners *![future /-x.apply/ vs] -seq],
 
-                                                    v(i)                 = future.decided[i || 0],
+                                                    finalize(vs = arguments) = send.apply(future, vs) -se [future.finalized = true, future.listeners = null],
 
-                                                    map(f)               = callback_future() -se- push("it /-it.apply/ call_vc(f, arguments)".qf),
-                                                    flat_map(f)          = callback_future() -se- push("f.apply(this, arguments).map(given.result in it /-it.apply/ arguments)".qf),
+                                                    push(f)                  = future -se- future.listeners /~push/ f /unless [future.finalized]
+                                                                                      -se- future /-f.apply/ future.decided /when [future.decided],
+
+                                                    v(i)                     = future.decided[i || 0],
+
+                                                    map(f)                   = callback_future() -se- push("it /-it.apply/ call_vc(f, arguments)".qf),
+                                                    flat_map(f)              = callback_future() -se- push("f.apply(this, arguments).map(given.result in it /-it.apply/ arguments)".qf),
 
 Use as signals.
 Unlike most implementations of futures, these futures can be reused after they are decided. This means that a future can emit multiple values at different points in time, making it useful as a
