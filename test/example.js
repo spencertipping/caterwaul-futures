@@ -5,7 +5,7 @@ $(caterwaul('js_all jquery')(function () {
 
           future_ui(f, value)           = jquery [div.future.decidable /text('<click to send #{JSON.stringify(value)}>')]
                                           -se- f.push(given.value in it.removeClass('decidable').addClass('decided').text(JSON.stringify(value)))
-                                          -se- it.click(delay in f(value)),
+                                          -se- it.click("f(value)".qf),
 
           future_output(f)              = jquery [div.future /text('<undecided>')]
                                           -se- f.push(given.value in it.addClass('decided').text(JSON.stringify(value))),

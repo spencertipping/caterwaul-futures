@@ -43,7 +43,7 @@ Mathematically, this construct takes {k1: F(v1), k2: F(v2), ...} and returns F({
                                                          enqueue(k, v)  = (queue[k] || (queue[k] = [])).push(v),
                                                          replay_queue() = queue /pairs *![receive(x[0])(x[1].shift()) -when- x[1].length] -seq,
 
-                                                         expected_count = each(xs, ++count -delay) -re- count -where [count = 0],
+                                                         expected_count = each(xs, "++count".qf) -re- count -where [count = 0],
                                                          received_count = 0,
                                                          receive(k)(v)  = received.hasOwnProperty(k) ? enqueue(k, v)
                                                                                                      : (received[numeric ? +k : k] = v)
@@ -65,7 +65,7 @@ Futures support a standard set of operations:
 Unlike most futures, Caterwaul futures are variadic. This means that you can deliver multiple arguments through a future. For instance:
 
 | var f = caterwaul.future();
-  setTimeout(delay in f('foo', 'bar'), 100);
+  setTimeout("f('foo', 'bar')".qf, 100);
   f.push(alert(x + y) -given [x, y]);           // Alerts 'foobar'
 
 Mapping a variadic future is simple: you just invoke this() instead of returning a value. Note that you can't invoke this() asynchronously; the return value will be used if this() isn't
