@@ -2,7 +2,10 @@ caterwaul.module( 'future' ,function($) { (function() {var static_future_methods
 return transpose_array(xs) } ,object:function(o) {;
 return transpose_object(o) } ,k:function(x) {;
 return callback_future() (x) } } ,construct_future=function(xs) {;
-return xs?xs.constructor===Object?$.future.object(xs) :xs.constructor===Array?$.future.array(xs) : (function() {throw new Error( ( 'unrecognized argument for future constructor: ' + (xs) + '' ) ) } ) .call(this) :callback_future() } ,callback_future=function() {;
+return xs?xs.constructor===Object?$.future.object(xs) 
+:xs.constructor===Array?$.future.array(xs) 
+: (function() {throw new Error( ( 'unrecognized argument for future constructor: ' + (xs) + '' ) ) } ) .call(this) 
+:callback_future() } ,callback_future=function() {;
 return(function() {var calls_its_send_method=function() {;
 return(function() {var f=function() {;
 return f.send.apply(f,arguments) } ;
@@ -20,7 +23,9 @@ for(var k in o)Object.prototype.hasOwnProperty.call(o,k) &&ps.push( [k,o[k] ] ) 
 return ps} ) .call(this, (queue) ) ) } ,expected_count= (function() {var count=0;
 return(function(it) {return count} ) .call(this, (each(xs,function(_) {return++count} ) ) ) } ) .call(this) ,received_count=0,receive=function(k) {;
 return function(v) {;
-return received.hasOwnProperty(k) ?enqueue(k,v) : ( (received[numeric? +k:k] =v) , ++received_count===expected_count&& (function(it) {return received=init() ,received_count=0,replay_queue() ,it} ) .call(this, (result(received) ) ) ) } } ;
+return received.hasOwnProperty(k) ?enqueue(k,v) 
+: ( (received[numeric? +k
+:k] =v) , ++received_count===expected_count&& (function(it) {return received=init() ,received_count=0,replay_queue() ,it} ) .call(this, (result(received) ) ) ) } } ;
 return(function(it) {return each(xs, (function(k,v) {return(v) .push(receive(k) ) } ) ) ,it} ) .call(this, (result) ) } ) .call(this) } } ,transpose_array=componentwise(function(_) {return[] } , (function(xs,f) {return(function(xs) {var x,x0,xi,xl,xr;
 for(var xi=0,xl=xs.length;
 xi<xl;
@@ -43,7 +48,7 @@ xi<xl;
  ++xi)x=xs[xi] , (x.apply(future,vs) ) ;
 return xs} ) .call(this,future.listeners) ,it} ) .call(this, ( (future.finalized&& (function() {throw new Error( ( 'cannot send ' + (vs) + ' to a finalized future' ) ) } ) .call(this) ,future) ) ) } ,finalize=function() {var vs=arguments;
 return(function(it) {return future.finalized=true,future.listeners=null,it} ) .call(this, (send.apply(future,vs) ) ) } ,push=function(f) {;
-return(function(it) {return!future.finalized&& (future.listeners) .push(f) ,future.decided&&f.apply(future,future.decided) ,it} ) .call(this, (future) ) } ,v=function(i) {;
+return(function(it) {return!future.finalized&& (future.listeners) .push(f) ,future.finalized&&f.apply(future,future.decided) ,it} ) .call(this, (future) ) } ,v=function(i) {;
 return future.decided[i||0] } ,map=function(f) {;
 return(function(it) {return push(function(_) {return it.apply(it,call_vc(f,arguments) ) } ) ,it} ) .call(this, (callback_future() ) ) } ,flat_map=function(f) {;
 return(function(it) {return push(function(_) {return f.apply(this,arguments) .map( (function(result) {return it.apply(it,arguments) } ) ) } ) ,it} ) .call(this, (callback_future() ) ) } ,scan=function(size) {;
