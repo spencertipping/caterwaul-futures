@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  c9921b65a211e64c867692d6c2b32b0f
-# istate: afdfd63e4bdf798fc3d29693866ff78a
+# state:  73ebc6df7a7105e5757992985ec39348
+# istate: ee5ad6958a2bb535b7c5261dc4b929cc
 # id:     c37d5fc9d5e1b3b1ccff7ed5ba88e92e
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1844,6 +1844,8 @@ invoked within the current invocation frame.
   var mapped  = trigger.map(given [x, y] in this(x, y, 'another'));
   mapped.push(given [x, y, z] in alert(x + y + z));
   trigger('hi', 'there');               // Alerts 'hithereanother'
+
+There is an exception, however. If you transpose variadic futures into arrays or objects, only the first argument will be used.
 
           // call_vc = call with variadic continuation. Used to call a function with some arguments, but where 'this' is bound to a function that takes multiple arguments and forwards them
           // through the future chain. This avoids Javascript's unary continuation asymmetry (i.e, expressions return only one value but continuations take potentially many).

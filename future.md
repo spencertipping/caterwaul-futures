@@ -79,6 +79,8 @@ invoked within the current invocation frame.
     mapped.push(given [x, y, z] in alert(x + y + z));
     trigger('hi', 'there');               // Alerts 'hithereanother'
 
+There is an exception, however. If you transpose variadic futures into arrays or objects, only the first argument will be used.
+
               // call_vc = call with variadic continuation. Used to call a function with some arguments, but where 'this' is bound to a function that takes multiple arguments and forwards them
               // through the future chain. This avoids Javascript's unary continuation asymmetry (i.e, expressions return only one value but continuations take potentially many).
               call_vc(f, xs)                = f.apply(continuation, xs) -re    [continuation_result || [it]]
