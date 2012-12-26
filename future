@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  73ebc6df7a7105e5757992985ec39348
-# istate: ee5ad6958a2bb535b7c5261dc4b929cc
+# state:  9e3722b5e76c2fc647cd8e1dbaca6e6a
+# istate: eab2a501bd81043adfa8f632f84b359b
 # id:     c37d5fc9d5e1b3b1ccff7ed5ba88e92e
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1880,6 +1880,8 @@ illustrate the difference on two arrays, each of which can be interpreted as the
 
 | [1, 2, 3, 4, 5].scan(1)                               -> [[1, 2], [2, 3], [3, 4], [4, 5]]
   [1, 2, 3, 4, 5].fold(given [x, y] in x + y, 0)        -> [0+1 = 1, 1+2 = 3, 3+3 = 6, 6+4 = 10, 10+5 = 15]
+
+Be careful with signals that are triggered by perpetual input sources. A signal holds a strong reference to each map(), filter(), etc, result.
 
                                                     scan(size)           = result -se- observe /!push -where [xs             = [],
                                                                                                               result         = callback_future() -se [it.queue() = xs],

@@ -116,6 +116,8 @@ illustrate the difference on two arrays, each of which can be interpreted as the
     [1, 2, 3, 4, 5].scan(1)                               -> [[1, 2], [2, 3], [3, 4], [4, 5]]
     [1, 2, 3, 4, 5].fold(given [x, y] in x + y, 0)        -> [0+1 = 1, 1+2 = 3, 3+3 = 6, 6+4 = 10, 10+5 = 15]
 
+Be careful with signals that are triggered by perpetual input sources. A signal holds a strong reference to each map(), filter(), etc, result.
+
                                                         scan(size)           = result -se- observe /!push -where [xs             = [],
                                                                                                                   result         = callback_future() -se [it.queue() = xs],
                                                                                                                   observe(x)     = xs /~push/ x -se- check_window(),
