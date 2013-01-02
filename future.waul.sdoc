@@ -91,7 +91,7 @@ There is an exception, however. If you transpose variadic futures into arrays or
                                                     finalize(vs = arguments) = send.apply(future, vs) -se [future.finalized = true, future.listeners = null],
 
                                                     push(f)                  = future -se [future.listeners /~push/ f -unless- future.finalized,
-                                                                                           future /-f.apply/ future.decided -when- future.finalized],
+                                                                                           future /-f.apply/ future.decided -when- future.decided],
 
                                                     v(i)                     = future.decided[i || 0],
 

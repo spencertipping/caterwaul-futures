@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  9e3722b5e76c2fc647cd8e1dbaca6e6a
-# istate: eab2a501bd81043adfa8f632f84b359b
+# state:  efefe1d64463780fddd25e067663771a
+# istate: 984e50cd8597c12822e000fdf1e38eee
 # id:     c37d5fc9d5e1b3b1ccff7ed5ba88e92e
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1860,7 +1860,7 @@ There is an exception, however. If you transpose variadic futures into arrays or
                                                     finalize(vs = arguments) = send.apply(future, vs) -se [future.finalized = true, future.listeners = null],
 
                                                     push(f)                  = future -se [future.listeners /~push/ f -unless- future.finalized,
-                                                                                           future /-f.apply/ future.decided -when- future.finalized],
+                                                                                           future /-f.apply/ future.decided -when- future.decided],
 
                                                     v(i)                     = future.decided[i || 0],
 
