@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  efefe1d64463780fddd25e067663771a
-# istate: 984e50cd8597c12822e000fdf1e38eee
+# state:  b439f9f2925a40e027ae4cc29a2f6b6f
+# istate: fb63a58d1c389d8a317bc5016427d0fb
 # id:     c37d5fc9d5e1b3b1ccff7ed5ba88e92e
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1801,7 +1801,8 @@ governed by the type of the argument to the future() constructor. Another possib
 
 | load_resources(o) = caterwaul.future(o %v*value[load(value)] -seq);
 
-Mathematically, this construct takes {k1: F(v1), k2: F(v2), ...} and returns F({k1: v1, k2: v2, ...}).
+Mathematically, this construct takes {k1: F(v1), k2: F(v2), ...} and returns F({k1: v1, k2: v2, ...}). Futures used with distributivity cannot be signals; the resulting future will be
+finalized once all of its component futures are resolved.
 
           componentwise(init, each)(xs) = result -se- each(xs, v /~push/ receive(k) -given [k, v])
                                                  -where [result         = callback_future(),
@@ -1815,9 +1816,10 @@ Mathematically, this construct takes {k1: F(v1), k2: F(v2), ...} and returns F({
                                                          expected_count = each(xs, "++count".qf) -re- count -where [count = 0],
                                                          received_count = 0,
                                                          receive(k)(v)  = received.hasOwnProperty(k) ? enqueue(k, v)
-                                                                                                     : (received[numeric ? +k : k] = v)
-                                                                                                       -then- result(received) /se   [received = init(), received_count = 0, replay_queue()]
-                                                                                                                               /when [++received_count === expected_count]],
+                                                                                                     : received[numeric ? +k : k] -eq.v
+                                                                                                       -then- result.finalize(received) /se   [queue = xs = init = each = null]
+                                                                                                                                        /when [++received_count === expected_count]],
+
           transpose_array               = componentwise("[]".qf, given [xs, f] in xs *![f(xi, x)] -seq),
           transpose_object              = componentwise("{}".qf, given [o,  f] in o /pairs *![f(x[0], x[1])] -seq),
 
@@ -1869,8 +1871,7 @@ There is an exception, however. If you transpose variadic futures into arrays or
 
 Use as signals.
 Unlike most implementations of futures, these futures can be reused after they are decided. This means that a future can emit multiple values at different points in time, making it useful as a
-signal. Container-mapped futures do more or less the right thing with multiple invocations: It resets its state and starts waiting for the second round of entries. Any repeat entries it
-received in the meantime will be used for future invocations.
+signal. You cannot use signals with container-transposed futures.
 
 Signals have a number of applications beyond futures. For instance, you can do things like folding their values across time and producing a new signal from this fold. One application of this
 is a time-series graph of events; if the data source reports totals and you want to see differences, then you want to scan across the original signal, folding each pair under subtraction.
