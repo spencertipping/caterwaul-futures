@@ -33,24 +33,19 @@ governed by the type of the argument to the future() constructor. Another possib
 | load_resources(o) = caterwaul.future(o %v*value[load(value)] -seq);
 
 Mathematically, this construct takes {k1: F(v1), k2: F(v2), ...} and returns F({k1: v1, k2: v2, ...}). Futures used with distributivity cannot be signals; the resulting future will be
-finalized once all of its component futures are resolved.
+finalized once all of its component futures are resolved. If any sub-future changes its value, the most recent one will be used.
 
           componentwise(init, each)(xs) = result -se- each(xs, v /~push/ receive(k) -given [k, v])
                                                  -where [result         = callback_future(),
                                                          received       = init(),
-                                                         queue          = {},
                                                          numeric        = xs.constructor === Array,
 
-                                                         enqueue(k, v)  = (queue[k] || (queue[k] = [])).push(v),
-                                                         replay_queue() = queue /pairs *![receive(x[0])(x[1].shift()) -when- x[1].length] -seq,
-
-                                                         expected_count = each(xs, "++count".qf) -re- count -where [count = 0],
+                                                         expected_count = each(xs, "++count".qf) -then- count -where [count = 0],
                                                          received_count = 0,
-                                                         receive(k)(v)  = received.hasOwnProperty(k) ? enqueue(k, v)
+                                                         receive(k)(v)  = received.hasOwnProperty(k) ? received[numeric ? +k : k] -eq.v         // ownproperty before assignment
                                                                                                      : received[numeric ? +k : k] -eq.v
-                                                                                                       -then- result.finalize(received) /se   [queue = xs = init = each = null]
+                                                                                                       -then- result.finalize(received) /se   [xs = null]
                                                                                                                                         /when [++received_count === expected_count]],
-
           transpose_array               = componentwise("[]".qf, given [xs, f] in xs *![f(xi, x)] -seq),
           transpose_object              = componentwise("{}".qf, given [o,  f] in o /pairs *![f(x[0], x[1])] -seq),
 
