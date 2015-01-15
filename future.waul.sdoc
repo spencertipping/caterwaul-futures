@@ -92,6 +92,10 @@ There is an exception, however. If you transpose variadic futures into arrays or
 
                                                     v(i)                     = future.decided[i || 0],
 
+                                                    plus(f)                  = callback_future() -se- push(it) /then [f.push(it)],
+                                                    first(f)                 = callback_future() -se [push(fn), f.push(fn), where [fn(args = arguments) = it.finalize.apply(it, args)
+                                                                                                                                                          -unless- it.decided]],
+
                                                     map(f)                   = callback_future() -se- push("it /-it.apply/ call_vc(f, arguments)".qf),
                                                     flat_map(f)              = callback_future() -se- push("f.apply(this, arguments).map(given.result in it /-it.apply/ arguments)".qf),
 

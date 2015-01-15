@@ -1,5 +1,5 @@
 $(caterwaul('js_all jquery')(function () {
-  $('body').append(simple_example, mapped_example, array_example, object_example)
+  $('body').append(simple_example, mapped_example, plus_example, first_example, array_example, object_example)
 
   -where [example(name, contents) = jquery in div.example(h1[name], div.contents[contents]),
 
@@ -19,6 +19,24 @@ $(caterwaul('js_all jquery')(function () {
 
                                                   -where [f = caterwaul.future(),
                                                           g = f.map(given.x in x + 1)]),
+
+          plus_example                  = example('f = f1.plus(f2)',
+
+                                                  jquery [table(tr(th('f1'),             th('f2'),             th('f')),
+                                                                tr(td[future_ui(f1, 2)], td[future_ui(f2, 5)], td[future_output(f)]))]
+
+                                                  -where [f1 = caterwaul.future(),
+                                                          f2 = caterwaul.future(),
+                                                          f  = f1.plus(f2)]),
+
+          first_example                 = example('f = f1.first(f2)',
+
+                                                  jquery [table(tr(th('f1'),             th('f2'),             th('f')),
+                                                                tr(td[future_ui(f1, 2)], td[future_ui(f2, 5)], td[future_output(f)]))]
+
+                                                  -where [f1 = caterwaul.future(),
+                                                          f2 = caterwaul.future(),
+                                                          f  = f1.first(f2)]),
 
           array_example                 = example('f = caterwaul.future([f1, f2, f3])',
 
